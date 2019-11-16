@@ -16,4 +16,12 @@ git commit -m 'deploy'
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
 git push -f git@github.com:mhvs/blog.git master:gh-pages
 
+# 同时将现有代码保存到github
+# 链接远程仓库
+# git remote add origin https://github.com/mhvs/blog.git
+# 拉取远程仓库文件
+# git pull --rebase origin master
+# 同步更新代码
+# git push -u origin master
+
 cd -

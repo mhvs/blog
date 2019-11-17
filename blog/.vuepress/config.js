@@ -2,7 +2,7 @@ module.exports = {
   title: 'mhvs 博客',
   description: 'This is a blog example built by VuePress',
   base: '/blog/',
-  theme: '@vuepress/theme-blog', // OR shortcut: @vuepress/blog
+  // theme: '@vuepress/theme-blog', // OR shortcut: @vuepress/blog
   themeConfig: {
     /**
      * Ref: https://vuepress-theme-blog.ulivz.com/#modifyblogpluginoptions
@@ -30,22 +30,18 @@ module.exports = {
       contact: [
         {
           type: 'github',
-          link: 'https://github.com/ulivz',
-        },
-        {
-          type: 'twitter',
-          link: 'https://twitter.com/_ulivz',
+          link: 'https://github.com/mhvs/blog/',
         },
       ],
       copyright: [
-        {
-          text: 'Privacy Policy',
-          link: 'https://policies.google.com/privacy?hl=en-US',
-        },
-        {
-          text: 'MIT Licensed | Copyright © 2018-present Vue.js',
-          link: '',
-        },
+        // {
+        //   text: 'Privacy Policy',
+        //   link: 'https://policies.google.com/privacy?hl=en-US',
+        // },
+        // {
+        //   text: 'MIT Licensed | Copyright © 2018-present Vue.js',
+        //   link: '',
+        // },
       ],
     },
   },

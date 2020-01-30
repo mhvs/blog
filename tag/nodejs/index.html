@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>nodejs tag | mhvs 博客</title>
+    <meta name="description" content="This is a blog example built by VuePress">
+    
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.262ceb8c.css" as="style"><link rel="preload" href="/blog/assets/js/app.aec6bc21.js" as="script"><link rel="preload" href="/blog/assets/js/4.4292cb7e.js" as="script"><link rel="preload" href="/blog/assets/js/6.ad7d4e9a.js" as="script"><link rel="prefetch" href="/blog/assets/js/1.f381b5a4.js"><link rel="prefetch" href="/blog/assets/js/10.4e958750.js"><link rel="prefetch" href="/blog/assets/js/11.d55c40d7.js"><link rel="prefetch" href="/blog/assets/js/12.a39607d1.js"><link rel="prefetch" href="/blog/assets/js/13.8138bbfc.js"><link rel="prefetch" href="/blog/assets/js/14.c98d2033.js"><link rel="prefetch" href="/blog/assets/js/15.94eef0ea.js"><link rel="prefetch" href="/blog/assets/js/16.2f1132a7.js"><link rel="prefetch" href="/blog/assets/js/17.23370f4e.js"><link rel="prefetch" href="/blog/assets/js/18.cc0920e1.js"><link rel="prefetch" href="/blog/assets/js/5.4da95a01.js"><link rel="prefetch" href="/blog/assets/js/7.3bb7f229.js"><link rel="prefetch" href="/blog/assets/js/8.bea68e80.js"><link rel="prefetch" href="/blog/assets/js/9.88b23aad.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.d59c2378.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.262ceb8c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuperess-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/blog/" class="nav-link home-link">mhvs 博客
+        </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/blog/" class="nav-link">Blog</a></li><li class="nav-item"><a href="/blog/tag/" class="nav-link router-link-active">Tags</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/blog/" class="nav-link mobile-home-link">mhvs 博客
+      </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/blog/" class="nav-link">Blog</a></li><li class="mobile-nav-item"><a href="/blog/tag/" class="nav-link router-link-active">Tags</a></li></ul></div></div></div> <div class="content-wrapper"><div><div id="base-list-layout"><div class="ui-posts"><div class="ui-post"><div class="ui-post-title"><a href="/blog/2020/01/23/commonjs%E7%9A%84%E5%AF%BC%E5%87%BA%E6%98%AF%E5%80%BC%E6%8B%B7%E8%B4%9D%E5%90%97/" class="nav-link">commonjs的导出是值拷贝吗?</a></div> <div class="ui-post-summary">
+        
+
+近期学习nodejs时，我发现不少网上比较commonjs和esmodule不同之处的文章都提到commonjs的导出是值拷贝，导出值改变不会导致导入值改变，esmodule的导出是导出引用地址，导出值改变则导入值同时改变。
+真的是这样吗？于是我试了试，发现问题没有那么简单。
+
+实验环境说明
+实验的目录环境如下
+src
+  commonjs
+    index.js
+ ...
+        </div> <div class="ui-post-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <span>2020-01-23</span></div></div></div> <!----></div> <!----></div></div> <footer class="footer" data-v-78e1d906><div class="footer-left-wrap" data-v-78e1d906><ul class="contact" data-v-78e1d906><li class="contact-item" data-v-78e1d906><a href="https://github.com/mhvs/blog/" target="_blank" rel="noopener noreferrer" class="nav-link external" data-v-78e1d906><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github" data-v-78e1d906><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" data-v-78e1d906></path></svg>
+          
+        </a></li></ul></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/blog/assets/js/app.aec6bc21.js" defer></script><script src="/blog/assets/js/4.4292cb7e.js" defer></script><script src="/blog/assets/js/6.ad7d4e9a.js" defer></script>
+  </body>
+</html>

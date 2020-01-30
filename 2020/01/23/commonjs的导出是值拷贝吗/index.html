@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>commonjs的导出是值拷贝吗? | mhvs 博客</title>
+    <meta name="description" content="This is a blog example built by VuePress">
+    
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.262ceb8c.css" as="style"><link rel="preload" href="/blog/assets/js/app.aec6bc21.js" as="script"><link rel="preload" href="/blog/assets/js/4.4292cb7e.js" as="script"><link rel="preload" href="/blog/assets/js/5.4da95a01.js" as="script"><link rel="preload" href="/blog/assets/js/17.23370f4e.js" as="script"><link rel="prefetch" href="/blog/assets/js/1.f381b5a4.js"><link rel="prefetch" href="/blog/assets/js/10.4e958750.js"><link rel="prefetch" href="/blog/assets/js/11.d55c40d7.js"><link rel="prefetch" href="/blog/assets/js/12.a39607d1.js"><link rel="prefetch" href="/blog/assets/js/13.8138bbfc.js"><link rel="prefetch" href="/blog/assets/js/14.c98d2033.js"><link rel="prefetch" href="/blog/assets/js/15.94eef0ea.js"><link rel="prefetch" href="/blog/assets/js/16.2f1132a7.js"><link rel="prefetch" href="/blog/assets/js/18.cc0920e1.js"><link rel="prefetch" href="/blog/assets/js/6.ad7d4e9a.js"><link rel="prefetch" href="/blog/assets/js/7.3bb7f229.js"><link rel="prefetch" href="/blog/assets/js/8.bea68e80.js"><link rel="prefetch" href="/blog/assets/js/9.88b23aad.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.d59c2378.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.262ceb8c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuperess-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/blog/" class="nav-link home-link">mhvs 博客
+        </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/blog/" class="nav-link">Blog</a></li><li class="nav-item"><a href="/blog/tag/" class="nav-link">Tags</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/blog/" class="nav-link mobile-home-link">mhvs 博客
+      </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/blog/" class="nav-link">Blog</a></li><li class="mobile-nav-item"><a href="/blog/tag/" class="nav-link">Tags</a></li></ul></div></div></div> <div class="content-wrapper"><div id="vuperess-theme-blog__post-layout"><div class="vuepress-blog-theme-content"><div class="content__default"><h1 id="commonjs的导出是值拷贝吗"><a href="#commonjs的导出是值拷贝吗" class="header-anchor">#</a> commonjs的导出是值拷贝吗?</h1> <p>近期学习nodejs时，我发现不少网上比较commonjs和esmodule不同之处的文章都提到commonjs的导出是值拷贝，导出值改变不会导致导入值改变，esmodule的导出是导出引用地址，导出值改变则导入值同时改变。
+真的是这样吗？于是我试了试，发现问题没有那么简单。</p> <h2 id="实验环境说明"><a href="#实验环境说明" class="header-anchor">#</a> 实验环境说明</h2> <p>实验的目录环境如下</p> <div class="language- extra-class"><pre class="language-text"><code>src
+  commonjs
+    - index.js
+    - lib.js
+  esmodule
+    - index.js
+    - lib.js  
+</code></pre></div><p>执行环境是nodejs 12.10.0</p> <p>代码用nodejs直接执行一次</p> <p>用webpack打包后nodejs执行一次(webpack和nodejs执行结果一致，下文就不区分是哪种执行结果了。)</p> <p>其中nodejs 使用esmodule的命令 <code>node --experimental-modules index.js</code></p> <p>webpack 打包命令 <code>node --experimental-modules index.js</code></p> <h2 id="commonjs代码及执行结果"><a href="#commonjs代码及执行结果" class="header-anchor">#</a> commonjs代码及执行结果</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// index.js</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> ss <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./lib'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> lib <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./lib'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'ss'</span><span class="token punctuation">,</span> ss<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'lib'</span><span class="token punctuation">,</span> lib<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'ss'</span><span class="token punctuation">,</span> ss<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'lib'</span><span class="token punctuation">,</span> lib<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// lib.js</span>
+module<span class="token punctuation">.</span>exports<span class="token punctuation">.</span>ss <span class="token operator">=</span> <span class="token string">'ss1'</span><span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    module<span class="token punctuation">.</span>exports<span class="token punctuation">.</span>ss <span class="token operator">=</span> <span class="token string">'ss2'</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'module.exports'</span><span class="token punctuation">,</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>执行结果
+ss ss1
+lib { ss: 'ss1' }
+lib module.exports { ss: 'ss2' }
+ss ss1
+lib { ss: 'ss2' }
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// webpack打包后的相关代码</span>
+<span class="token comment">/******/</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+<span class="token comment">/***/</span> <span class="token string">&quot;./index.js&quot;</span><span class="token punctuation">:</span>
+<span class="token comment">/***/</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span> exports<span class="token punctuation">,</span> __webpack_require__</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">{</span> ss <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token comment">/*! ./lib */</span> <span class="token string">&quot;./lib.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> lib <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token comment">/*! ./lib */</span> <span class="token string">&quot;./lib.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'ss'</span><span class="token punctuation">,</span> ss<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'lib'</span><span class="token punctuation">,</span> lib<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'ss'</span><span class="token punctuation">,</span> ss<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'lib'</span><span class="token punctuation">,</span> lib<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/***/</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+<span class="token comment">/***/</span> <span class="token string">&quot;./lib.js&quot;</span><span class="token punctuation">:</span>
+<span class="token comment">/***/</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span> exports</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+module<span class="token punctuation">.</span>exports<span class="token punctuation">.</span>ss <span class="token operator">=</span> <span class="token string">'ss1'</span><span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    module<span class="token punctuation">.</span>exports<span class="token punctuation">.</span>ss <span class="token operator">=</span> <span class="token string">'ss2'</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'module.exports'</span><span class="token punctuation">,</span> module<span class="token punctuation">.</span>exports<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/***/</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">/******/</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>从执行结果可以看出</p> <ol><li>commonjs 导出的是module.exports这个对象，导出值给这个对象添加新的属性会影响导入值。</li> <li><code>const { ss } = require('./lib');</code> 相当于 <code>const { ss } = {ss:'ss1'};</code> 解构赋值，相当于<code>const ss = 'ss1';</code>所以导出对象修改ss不能使导入对象<code>ss</code>也变成2。</li></ol> <h3 id="阶段性结论"><a href="#阶段性结论" class="header-anchor">#</a> 阶段性结论</h3> <p>commonjs的导出是值拷贝这句话是错误的，commonjs导出的是module.exports，commonjs的导入就是变量赋值。当module.exports的值是字符串、数字等原始类型时，赋值是值拷贝才会产生导出值改变不会导致导入值改变的现象。</p> <h2 id="esmodule代码及执行结果"><a href="#esmodule代码及执行结果" class="header-anchor">#</a> esmodule代码及执行结果</h2> <p>似乎话题到此为止，但是我又产生了一个疑惑，为什么会有commonjs的导出是值拷贝这个提法呢？于是我又实验了一下esmodule，发现了一些有趣的东西。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// index.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>a<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./lib.js'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> b <span class="token keyword">from</span> <span class="token string">'./lib.js'</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b'</span><span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b'</span><span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// lib.js</span>
+<span class="token keyword">export</span> <span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> b<span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b'</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>执行结果
+a 1
+b 1
+lib a 2
+lib b 2
+a 2
+b 1
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// webpack 导出文件</span>
+<span class="token comment">/******/</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+<span class="token comment">/***/</span> <span class="token string">&quot;./index.js&quot;</span><span class="token punctuation">:</span>
+<span class="token comment">/*! no exports provided */</span>
+<span class="token comment">/***/</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span> __webpack_exports__<span class="token punctuation">,</span> __webpack_require__</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+<span class="token string">&quot;use strict&quot;</span><span class="token punctuation">;</span>
+__webpack_require__<span class="token punctuation">.</span><span class="token function">r</span><span class="token punctuation">(</span>__webpack_exports__<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/* harmony import */</span> <span class="token keyword">var</span> _lib_js__WEBPACK_IMPORTED_MODULE_0__ <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token comment">/*! ./lib.js */</span> <span class="token string">&quot;./lib.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span>_lib_js__WEBPACK_IMPORTED_MODULE_0__<span class="token punctuation">[</span><span class="token string">&quot;a&quot;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b'</span><span class="token punctuation">,</span>_lib_js__WEBPACK_IMPORTED_MODULE_0__<span class="token punctuation">[</span><span class="token string">&quot;default&quot;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span>_lib_js__WEBPACK_IMPORTED_MODULE_0__<span class="token punctuation">[</span><span class="token string">&quot;a&quot;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'b'</span><span class="token punctuation">,</span>_lib_js__WEBPACK_IMPORTED_MODULE_0__<span class="token punctuation">[</span><span class="token string">&quot;default&quot;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token comment">/***/</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+<span class="token comment">/***/</span> <span class="token string">&quot;./lib.js&quot;</span><span class="token punctuation">:</span>
+<span class="token comment">/*! exports provided: a, default */</span>
+<span class="token comment">/***/</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span> __webpack_exports__<span class="token punctuation">,</span> __webpack_require__</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+<span class="token string">&quot;use strict&quot;</span><span class="token punctuation">;</span>
+__webpack_require__<span class="token punctuation">.</span><span class="token function">r</span><span class="token punctuation">(</span>__webpack_exports__<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/* harmony export (binding) */</span> __webpack_require__<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span>__webpack_exports__<span class="token punctuation">,</span> <span class="token string">&quot;a&quot;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> a<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment">/* harmony default export */</span> __webpack_exports__<span class="token punctuation">[</span><span class="token string">&quot;default&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    a <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'lib a'</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'lib b'</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/***/</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">/******/</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>从执行结果可以看出</p> <ol><li>和commonjs不同，即使导出文件导出数字，当导出值变化时，导入值也变化。</li> <li>esmodule 导出了一个对象，但是没有办法在导入文件中直接引用这个对象，只能拿到这个对象中的属性。</li> <li>esmodule 导入导出值都指向同一个同一个内存地址，所以导入值会跟随导出值变化。</li></ol> <h2 id="结论"><a href="#结论" class="header-anchor">#</a> 结论</h2> <p>commonjs导出的是module.exports，commonjs的导入就是变量赋值。当module.exports的值是字符串、数字等原始类型时，赋值是值拷贝才会产生导出值改变不会导致导入值改变的现象。
+esmodule中的导入值更像一个指针，导入导出值都指向同一个同一个内存地址，所以导入值会随导出值变化而变化。</p></div> <hr> <!----></div> <div class="sticker vuepress-toc"><div class="vuepress-toc-item vuepress-toc-h2 active"><a href="#实验环境说明" title="实验环境说明">实验环境说明</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#commonjs代码及执行结果" title="commonjs代码及执行结果">commonjs代码及执行结果</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#阶段性结论" title="阶段性结论">阶段性结论</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#esmodule代码及执行结果" title="esmodule代码及执行结果">esmodule代码及执行结果</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#结论" title="结论">结论</a></div></div></div></div> <footer class="footer" data-v-78e1d906><div class="footer-left-wrap" data-v-78e1d906><ul class="contact" data-v-78e1d906><li class="contact-item" data-v-78e1d906><a href="https://github.com/mhvs/blog/" target="_blank" rel="noopener noreferrer" class="nav-link external" data-v-78e1d906><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github" data-v-78e1d906><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" data-v-78e1d906></path></svg>
+          
+        </a></li></ul></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/blog/assets/js/app.aec6bc21.js" defer></script><script src="/blog/assets/js/4.4292cb7e.js" defer></script><script src="/blog/assets/js/5.4da95a01.js" defer></script><script src="/blog/assets/js/17.23370f4e.js" defer></script>
+  </body>
+</html>
